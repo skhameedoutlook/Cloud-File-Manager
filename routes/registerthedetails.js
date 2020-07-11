@@ -39,37 +39,64 @@ router.post('/', function(req, res, next) {
     if(req.body) {
         var theemail = req.body.email;
         var thepassword = req.body.password;
-        console.log("${theemail}");
+        console.log("${the.email}");
         if(theemail != "") {
-            connection.query("Insert Into usertable(email, password) values('"+theemail+"', '"+thepassword+ "');", function(error, results, fields) {
+            connection.query("select count(*) as count from usertable where email='"+theemail+"';", function(error, results, fields) {
                 if(error) {
-                    console.log("Could not insert Successfully");
-                    // throw error;
+                    console.log("Could not check");
+                    // res.render('register', {});
+                    res.redirect('register');
                 }
                 else {
-                    rsuccess = true;
-                    console.log("Inserted successfully");
-                }
-                var dir = './users/' + theemail;
-                fs.mkdir(dir, function(error) {
-                    if(error) {
-                        console.log("Could not create directory");
-                        res.render('login', {success: success, rsuccess: rsuccess});
+                    if(results[0].count > 0) {
+                        console.log("User already exists");
+                        // res.render('register', {});
+                        res.redirect('register');
                     }
                     else {
-                        console.log("Created user directory");
-                        res.render('userpage', {success: true, rsuccess: true});
+                        connection.query("Insert Into usertable(email, password) values('"+theemail+"', '"+thepassword+ "');", function(error, results, fields) {
+                            if(error) {
+                                console.log("Could not insert Successfully");
+                                // res.render('register', {});
+                                res.redirect('register');
+                                // throw error;
+                            }
+                            else {
+                                rsuccess = true;
+                                console.log("Inserted successfully");
+                                var dir = './users/' + theemail;
+                                fs.mkdir(dir, function(error) {
+                                    if(error) {
+                                        console.log("Could not create directory");
+                                        // res.render('register', {});
+                                        res.redirect('register');
+                                        // res.render('login', {success: success, rsuccess: rsuccess});
+                                    }
+                                    else {
+                                        console.log("Created user directory");
+                                        res.redirect('login');
+                                    }
+                                });
+                                // res.render('register', {});
+                                // res.redirect('register');
+                            }
+                            // res.render('login', {success: success, rsuccess: rsuccess});
+                        });
                     }
-                });
-                res.render('login', {success: success, rsuccess: rsuccess});
+                }
             });
+            
         }
         else {
-            res.render('login', {success: success, rsuccess: false});
+            // res.render('register', {});
+            res.redirect('register');
+            // res.render('login', {success: success, rsuccess: false});
         }
     }
     else {
-        res.render('login', {success: success, rsuccess: false});
+        // res.render('register', {});
+        res.redirect('register');
+        // res.render('login', {success: success, rsuccess: false});
     }
 });
 
