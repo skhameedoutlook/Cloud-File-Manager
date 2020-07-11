@@ -92,7 +92,8 @@ app.get('/deletefile/:str', function(req, res) {
     } 
   });
   console.log('downloaded');
-  res.render('userpage', {success: true, rsuccess: true, user: 'F1', filecount: 0, foldercount: 0, itemlist: []});
+  // res.render('userpage', {success: true, rsuccess: true, user: 'F1', filecount: 0, foldercount: 0, itemlist: []});
+  res.redirect('/userpage');
 });
 
 app.get('/deletefolder/:str', function(req, res) {

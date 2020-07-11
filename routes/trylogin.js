@@ -43,6 +43,7 @@ router.post('/', function(req, res, next) {
             connection.query("select password from usertable where email='"+theemail+"';", function(error, results, fields) {
                 if(error) {
                     console.log("Could not find user");
+                    res.render('login', {success: false, rsuccess: true});
                     // throw error;
                 }
                 else {
@@ -62,9 +63,9 @@ router.post('/', function(req, res, next) {
                             res.render('login', {success: false, rsuccess: true});
                         }
                     }
-                    res.render('login', {success: false, rsuccess: true});
+                    // res.render('login', {success: false, rsuccess: true});
                 }
-                res.render('login', {success: false, rsuccess: true});
+                // res.render('login', {success: false, rsuccess: true});
             });
         }
         else {
