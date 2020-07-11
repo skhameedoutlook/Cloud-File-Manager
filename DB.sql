@@ -1,0 +1,6 @@
+CREATE TABLE UserTable (
+    uid INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email varchar(255) UNIQUE NOT NULL,
+    PASSWORD varchar(255)
+);
+

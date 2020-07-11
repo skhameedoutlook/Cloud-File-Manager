@@ -1,0 +1,51 @@
+Welcome <%= user %>
+
+<%= filecount %> Files
+<%= foldercount %> Folders
+
+<br />
+
+<form method="post" action="/upload" enctype="multipart/form-data">
+    <input type="file" name="filetoupload" />
+    <input type="submit" value="Upload" />
+</form>
+
+<br />
+
+<% itemlist.forEach(function(item) { %>
+    <button style="display: block; width: 100px; height: 50x; background: #95a5a6; border: none; margin: 5px;" onclick="openItem('<%= item %>');"><%= item.name %></button>
+    <button onclick="downloadItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Download</button>
+    <button onclick="deleteItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Delete</button>
+    <br />
+<% }); %>
+
+<a href="/">Logout</a>
+
+<script>
+    var openItem = function(item) {
+        alert(item);
+    }
+    var downloadItem = function(name, path, type) {
+        // alert(type);
+        if(type == 'folder') {
+            alert("Cannot download a folder");
+        }
+        else {
+            // alert("Can download file");
+            var abspath = path + '/' + name;
+            window.location = 'download/'+encodeURIComponent(abspath);
+        }
+    }
+    var deleteItem = function(name, path, type) {
+        if(type == 'folder') {
+            // alert("Cannot download a folder");
+            var abspath = path + '/' + name;
+            window.location = 'deletefolder/'+encodeURIComponent(abspath);
+        }
+        else {
+            // alert("Can download file");
+            var abspath = path + '/' + name;
+            window.location = 'deletefile/'+encodeURIComponent(abspath);
+        }
+    }
+</script>
