@@ -1,9 +1,10 @@
 var express = require('express');
+const session = require('express-session');
 var router = express.Router();
 fs = require('fs');
 
-var theemail = 'F1';
-var dir = './users/'+theemail;
+var theemail;// = 'F1';
+var dir = './users/';
 var itemlist = [];
 var filecount = 0;
 var foldercount = 0;
@@ -16,7 +17,13 @@ var Item = function(name, path, type) {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+    if(!req.session.loggedemail) {
+        res.render('login', {success: false, rsuccess: true});
+    }
     try {
+        dir = './users/';
+        theemail = req.session.loggedemail;
+        dir = dir + theemail;
         itemlist = [];
         filecount = 0;
         foldercount = 0;
@@ -41,6 +48,7 @@ router.get('/', function(req, res, next) {
     catch(err) {
 
     }
+    theemail = req.session.loggedemail;
     res.render('userpage', {success: true, rsuccess: true, user: theemail, filecount: filecount, foldercount: foldercount, itemlist: itemlist});
 });
 

@@ -13,6 +13,8 @@ var registerTheDetailsRouter = require('./routes/registerthedetails');
 var tryLoginRouter = require('./routes/trylogin');
 var userPageRouter = require('./routes/userpage');
 var downloadRouter = require('./routes/download');
+var logoutRouter = require('./routes/logout');
+var session = require('express-session');
 var cors = require('cors');
 var util = require('util');
 
@@ -33,6 +35,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
+app.use(session({
+  secret: 'secret'
+}));
+
 app.use(fileUpload());
 // app.use('/', indexRouter);
 app.use('/', loginRouter);
@@ -42,15 +48,17 @@ app.use('/register', registerRouter);
 app.use('/registerthedetails', registerTheDetailsRouter);
 app.use('/trylogin', tryLoginRouter);
 app.use('/userpage', userPageRouter);
+app.use('/logout', logoutRouter);
 // app.use('/upload', uploadRouter);
 // app.use('/download', downloadRouter);
 
 app.get('/download/:str', function(req, res) {
   // console.log("<->"+decodeURIComponent(req.params.str));
   // console.log("<->"+req.params.str);
-  // res.download(decodeURIComponent(req.params.str));
+  res.download(decodeURIComponent(req.params.str));
   console.log('downloaded');
   // res.render('userpage', {success: true, rsuccess: true, user: 'F1', filecount: 0, foldercount: 0, itemlist: []});
+  // res.redirect('/userpage');
 });
 
 app.get('/deletefile/:str', function(req, res) {
@@ -75,7 +83,7 @@ app.get('/deletefolder/:str', function(req, res) {
     } 
   });
   console.log('downloaded');
-  res.render('userpage', {success: true, rsuccess: true, user: 'F1', filecount: 0, foldercount: 0, itemlist: []});
+  res.redirect('/userpage');
 });
 
 
@@ -91,8 +99,8 @@ app.post('/upload', function(req, res) {
     }
     else {
         let thefile = req.files.filetoupload;
-        console.log('./users/F1/' + thefile.name);
-        thefile.mv('./users/F1/' + thefile.name);
+        console.log('./users/'+req.session.loggedemail+'/' + thefile.name);
+        thefile.mv('./users/'+req.session.loggedemail +'/'+ thefile.name);
         console.log("File uploaded successfully");
         // res.send({
         //     status: true,
@@ -108,7 +116,7 @@ app.post('/upload', function(req, res) {
   catch(error) {
     console.log("File not uploaded");
   }
-  res.render('userpage', {success: true, rsuccess: true, user: 'F1', filecount: 0, foldercount: 0, itemlist: []});
+  res.redirect('/userpage');
 });
 
 

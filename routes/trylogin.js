@@ -53,7 +53,9 @@ router.post('/', function(req, res, next) {
                     }
                     else {
                         if(results[0].password == thepassword) {
-                            res.render('userpage', {success: true, rsuccess: true, user: theemail, filecount: 0, foldercount: 0, itemlist: []});
+                            req.session.loggedemail = theemail;
+                            res.redirect('/userpage');
+                            // res.render('userpage', {success: true, rsuccess: true, user: theemail, filecount: 0, foldercount: 0, itemlist: []});
                         }
                         else {
                             res.render('login', {success: false, rsuccess: true});
