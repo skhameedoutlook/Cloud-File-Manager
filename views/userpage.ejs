@@ -1,3 +1,49 @@
+<script language="javascript" src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css"/>
+<link rel="stylesheet" href="stylesheets/style.css"/>
+
+<div class="container " >
+    <nav id="loc-nav" class="navbar navbar-expand-lg navbar-light bg-success" style=" height: 40px; color: #FFFFFF; border-radius: 5px;">
+        <div id="loc-nav-body">
+            Currently, in users/<%= user %> directory
+        </div>
+    </nav>
+    <div id="main-content"> 
+        <% counter = 0 %>
+        <% itemlist.forEach(function(item) { %>
+            <% if(counter % 3 == 0) { %>
+                <div class="row row-spacing">
+            <% } %>
+            <div class="col-sm" >
+                <div id="idz"  class="center-hz col-sm-inner" onclick="openItem(event, '<%= item.name %>', '<%= item.path %>', '<%= item.type %>');" >
+                    <% if (item.type == "file") { %>
+                        <img  src="icons/the-file.png" class="center-hz" style= "width: 70px; height: 70px; padding-top: 20px;">
+                        <p class="center-text"><%= item.name %></p>
+                        <center style="display: block; width: 200px; height: 50px; ">
+                            <button style="margin-left: auto; margin-right: auto;" class="btn btn-primary my-sm-button" onclick="downloadItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">&#8595;</button>
+                            <button style="margin-left: auto; margin-right: auto;" class="btn btn-danger my-sm-button" onclick="deleteItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">X</button>
+                        </center>
+                        <!-- <button onclick="downloadItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Download</button>
+                        <button onclick="deleteItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Delete</button> -->
+                    <% }  else { %>
+                        <img src="icons/the-folder.png" class="center-hz" style= "width: 70px; height: 70px; padding-top: 20px;">
+                        <p class="center-text"><%= item.name %></p>
+                        <center style="display: block; width: 200px; height: 50px; ">  
+                            <button style="margin-left: auto; margin-right: auto;" class="btn btn-danger my-sm-button" onclick="deleteItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">X</button>
+                        </center>
+                        <!-- <button onclick="deleteItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Delete</button> -->
+                    <% } %>
+                </div>
+            </div>
+            <% if(counter % 3 == 2  || counter == itemlist.length-1) { %>
+                </div>
+            <% } %>
+            <% counter = counter+1 %>
+        <% }); %>
+    </div>
+
+</div>
+
 Welcome <%= user %>
 
 <%= filecount %> Files
@@ -5,7 +51,7 @@ Welcome <%= user %>
 
 <br />
 
-<a href="/back">Back</a>
+<a class="btn btn-success" href="/back">&#8592;</a>
 
 <br />
 
@@ -30,15 +76,18 @@ Welcome <%= user %>
     <br />
 <% }); %>
 
-<a href="/logout">Logout</a>
+<a class="btn btn-primary" href="/logout">Logout</a>
 
 <script>
-    var openItem = function(name, path, type) {
-        if(type == 'folder') {
-            window.location = 'cd/'+encodeURIComponent(name);
-        }
-        else {
-            alert("Cannot open files yet!");
+    var openItem = function(event, name, path, type) {
+        event.stopPropagation();
+        if(event.target.classList[0] != 'btn') {
+            if(type == 'folder') {
+                window.location = 'cd/'+encodeURIComponent(name);
+            }
+            else {
+                // alert("Cannot open files yet!");
+            }
         }
     }
     var downloadItem = function(name, path, type) {
@@ -54,12 +103,12 @@ Welcome <%= user %>
     }
     var deleteItem = function(name, path, type) {
         if(type == 'folder') {
-            // alert("Cannot download a folder");
+            // alert("Can delete folder");
             var abspath = path + '/' + name;
             window.location = 'deletefolder/'+encodeURIComponent(abspath);
         }
         else {
-            // alert("Can download file");
+            // alert("Can delete file");
             var abspath = path + '/' + name;
             window.location = 'deletefile/'+encodeURIComponent(abspath);
         }
