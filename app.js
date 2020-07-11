@@ -122,8 +122,8 @@ app.post('/upload', function(req, res) {
     }
     else {
         let thefile = req.files.filetoupload;
-        console.log('./users/'+req.session.loggedemail+'/' + thefile.name);
-        thefile.mv('./users/'+req.session.loggedemail +'/'+ thefile.name);
+        console.log('./users/'+req.session.loggedemail + req.session.currentdir.join('/') +'/' + thefile.name);
+        thefile.mv('./users/'+req.session.loggedemail + req.session.currentdir.join('/') +'/'+ thefile.name);
         console.log("File uploaded successfully");
         // res.send({
         //     status: true,
