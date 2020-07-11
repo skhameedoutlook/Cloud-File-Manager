@@ -5,6 +5,10 @@ Welcome <%= user %>
 
 <br />
 
+<a href="/back">Back</a>
+
+<br />
+
 <form method="post" action="/upload" enctype="multipart/form-data">
     <input type="file" name="filetoupload" />
     <input type="submit" value="Upload" />
@@ -13,8 +17,10 @@ Welcome <%= user %>
 <br />
 
 <% itemlist.forEach(function(item) { %>
-    <button style="display: block; width: 100px; height: 50x; background: #95a5a6; border: none; margin: 5px;" onclick="openItem('<%= item %>');"><%= item.name %></button>
-    <button onclick="downloadItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Download</button>
+    <button style="display: block; width: 100px; height: 50x; background: #95a5a6; border: none; margin: 5px;" onclick="openItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>');"><%= item.name %></button>
+    <% if (item.type == "file") { %>
+        <button onclick="downloadItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Download</button>
+    <% } %>
     <button onclick="deleteItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Delete</button>
     <br />
 <% }); %>
@@ -22,8 +28,13 @@ Welcome <%= user %>
 <a href="/logout">Logout</a>
 
 <script>
-    var openItem = function(item) {
-        alert(item);
+    var openItem = function(name, path, type) {
+        if(type == 'folder') {
+            window.location = 'cd/'+encodeURIComponent(name);
+        }
+        else {
+            alert("Cannot open files yet!");
+        }
     }
     var downloadItem = function(name, path, type) {
         // alert(type);

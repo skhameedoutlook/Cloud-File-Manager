@@ -23,7 +23,8 @@ router.get('/', function(req, res, next) {
     try {
         dir = './users/';
         theemail = req.session.loggedemail;
-        dir = dir + theemail;
+        dir = dir + theemail + req.session.currentdir.join('/');
+        console.log("Changed to: " +dir);
         itemlist = [];
         filecount = 0;
         foldercount = 0;

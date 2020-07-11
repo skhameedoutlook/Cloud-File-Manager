@@ -61,6 +61,28 @@ app.get('/download/:str', function(req, res) {
   // res.redirect('/userpage');
 });
 
+app.get('/cd/:str', function(req, res) {
+  // console.log("<->"+decodeURIComponent(req.params.str));
+  // console.log("<->"+req.params.str);
+  // res.download(decodeURIComponent(req.params.str));
+  req.session.currentdir.push(req.params.str);
+  console.log('Changed directory');
+  // res.render('userpage', {success: true, rsuccess: true, user: 'F1', filecount: 0, foldercount: 0, itemlist: []});
+  res.redirect('/userpage');
+});
+
+app.get('/back', function(req, res) {
+  // console.log("<->"+decodeURIComponent(req.params.str));
+  // console.log("<->"+req.params.str);
+  // res.download(decodeURIComponent(req.params.str));
+  if(req.session.currentdir.length > 1) {
+    req.session.currentdir.pop();
+  }
+  console.log('Going back');
+  // res.render('userpage', {success: true, rsuccess: true, user: 'F1', filecount: 0, foldercount: 0, itemlist: []});
+  res.redirect('/userpage');
+});
+
 app.get('/deletefile/:str', function(req, res) {
   console.log("<->D:"+decodeURIComponent(req.params.str));
   // console.log("<->"+req.params.str);

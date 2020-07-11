@@ -54,6 +54,7 @@ router.post('/', function(req, res, next) {
                     else {
                         if(results[0].password == thepassword) {
                             req.session.loggedemail = theemail;
+                            req.session.currentdir = [''];
                             res.redirect('/userpage');
                             // res.render('userpage', {success: true, rsuccess: true, user: theemail, filecount: 0, foldercount: 0, itemlist: []});
                         }
