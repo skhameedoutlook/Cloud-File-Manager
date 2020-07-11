@@ -16,6 +16,11 @@ Welcome <%= user %>
 
 <br />
 
+<form method="post" action="/createfolder" enctype="multipart/form-data">
+    <input type="text" name="foldername" />
+    <input type="submit" value="Create folder" />
+</form>
+
 <% itemlist.forEach(function(item) { %>
     <button style="display: block; width: 100px; height: 50x; background: #95a5a6; border: none; margin: 5px;" onclick="openItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>');"><%= item.name %></button>
     <% if (item.type == "file") { %>

@@ -96,6 +96,26 @@ app.get('/deletefile/:str', function(req, res) {
   res.redirect('/userpage');
 });
 
+app.post('/createfolder', function(req, res) {
+  // console.log("<->DF:"+decodeURIComponent(req.params.str));
+  // console.log("<->"+req.params.str);
+  // res.download(decodeURIComponent(req.params.str));
+  if(req.body.foldername == "") {
+    console.log("Folder name not provided.");
+  }
+  else {
+    console.log("Creating" + req.body.foldername);
+    if (!fs.existsSync('./users/'+req.session.loggedemail + req.session.currentdir.join('/')+'/'+req.body.foldername)){
+      fs.mkdirSync('./users/'+req.session.loggedemail + req.session.currentdir.join('/')+'/'+req.body.foldername);
+      console.log('Created');
+    }
+    else {
+      console.log("Folder already exists.");
+    }
+  }
+  res.redirect('/userpage');
+});
+
 app.get('/deletefolder/:str', function(req, res) {
   console.log("<->DF:"+decodeURIComponent(req.params.str));
   // console.log("<->"+req.params.str);
