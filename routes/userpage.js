@@ -50,7 +50,7 @@ router.get('/', function(req, res, next) {
 
     }
     theemail = req.session.loggedemail;
-    res.render('userpage', {success: true, rsuccess: true, user: theemail, filecount: filecount, foldercount: foldercount, itemlist: itemlist});
+    res.render('userpage', {success: true, rsuccess: true, user: theemail, filecount: filecount, foldercount: foldercount, itemlist: itemlist, dir: dir});
     // res.redirect('userpage');
 });
 
