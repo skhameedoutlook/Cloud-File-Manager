@@ -1,6 +1,69 @@
+<script src="javascripts/jquery-3.5.1.min.js"></script>
 <script language="javascript" src="js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <link rel="stylesheet" href="stylesheets/style.css"/>
+
+<div class="modal fade" id="folderCreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="post" action="/createfolder" enctype="multipart/form-data">
+                <input type="text" name="foldername" />
+                <input type="submit" value="Create folder" />
+            </form>            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="post" action="/upload" enctype="multipart/form-data">
+                <input type="file" name="filetoupload" />
+                <input type="submit" value="Upload" />
+            </form>            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Cloud File Manager</a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="btn btn-success" href="/back">&#8592; Back</a>
+        </li>
+        
+    </ul>
+    
+    <form class="form-inline my-2 my-lg-0">
+        <a class="btn btn-primary" href="/logout">Logout</a>
+    </form>
+</nav>
+
+<div style="display: block; height: 20px;"></div>
 
 <div class="container " >
     <nav id="loc-nav" class="navbar navbar-expand-lg navbar-light bg-success" style=" height: 40px; color: #FFFFFF; border-radius: 5px;">
@@ -9,7 +72,20 @@
         </div>
     </nav>
     <div id="main-content"> 
-        <% counter = 0 %>
+        <div class="row row-spacing">
+            <div class="col-sm" >
+                <div id="idz"  class="center-hz col-sm-inner" data-toggle="modal" data-target="#fileUploadModal" >
+                    <img  src="icons/cloud-upload.png" class="center-hz" style= "width: 70px; height: 90px; padding-top: 20px;">
+                    <p class="center-text">Upload file</p>
+                </div>
+            </div>
+            <div class="col-sm" >
+                <div id="idz"  class="center-hz col-sm-inner" data-toggle="modal" data-target="#folderCreateModal" >
+                    <img  src="icons/add-icon.png" class="center-hz" style= "width: 70px; height: 90px; padding-top: 20px;">
+                    <p class="center-text">Create folder</p>
+                </div>
+            </div>
+        <% counter = 2 %>
         <% itemlist.forEach(function(item) { %>
             <% if(counter % 3 == 0) { %>
                 <div class="row row-spacing">
@@ -17,7 +93,7 @@
             <div class="col-sm" >
                 <div id="idz"  class="center-hz col-sm-inner" onclick="openItem(event, '<%= item.name %>', '<%= item.path %>', '<%= item.type %>');" >
                     <% if (item.type == "file") { %>
-                        <img  src="icons/the-file.png" class="center-hz" style= "width: 70px; height: 70px; padding-top: 20px;">
+                        <img  src="icons/the-file.png" class="center-hz" style= "width: 70px; height: 90px; padding-top: 20px;">
                         <p class="center-text"><%= item.name %></p>
                         <center style="display: block; width: 200px; height: 50px; ">
                             <button style="margin-left: auto; margin-right: auto;" class="btn btn-primary my-sm-button" onclick="downloadItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">&#8595;</button>
@@ -26,7 +102,7 @@
                         <!-- <button onclick="downloadItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Download</button>
                         <button onclick="deleteItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Delete</button> -->
                     <% }  else { %>
-                        <img src="icons/the-folder.png" class="center-hz" style= "width: 70px; height: 70px; padding-top: 20px;">
+                        <img src="icons/the-folder.png" class="center-hz" style= "width: 70px; height: 90px; padding-top: 20px;">
                         <p class="center-text"><%= item.name %></p>
                         <center style="display: block; width: 200px; height: 50px; ">  
                             <button style="margin-left: auto; margin-right: auto;" class="btn btn-danger my-sm-button" onclick="deleteItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">X</button>
@@ -40,11 +116,14 @@
             <% } %>
             <% counter = counter+1 %>
         <% }); %>
+        <% if(counter % 3 == 2  || counter == itemlist.length-1) { %>
+            </div>
+        <% } %>
     </div>
 
 </div>
 
-Welcome <%= user %>
+<!-- Welcome <%= user %>
 
 <%= filecount %> Files
 <%= foldercount %> Folders
@@ -74,9 +153,9 @@ Welcome <%= user %>
     <% } %>
     <button onclick="deleteItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Delete</button>
     <br />
-<% }); %>
+<% }); %> -->
 
-<a class="btn btn-primary" href="/logout">Logout</a>
+<!-- <a class="btn btn-primary" href="/logout">Logout</a> -->
 
 <script>
     var openItem = function(event, name, path, type) {
