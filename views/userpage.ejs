@@ -3,6 +3,14 @@
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <link rel="stylesheet" href="stylesheets/style.css"/>
 
+<style>
+    body {
+        background-color: #ecf0f1;
+    }
+</style>
+
+<body>
+
 <div class="modal fade" id="folderCreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -48,16 +56,16 @@
   </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Cloud File Manager</a>
+    <a class="navbar-brand" href="#" style="color: #34345E;">Cloud File Manager</a>
     <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-            <a class="btn btn-success" href="/back">&#8592; Back</a>
+            <a class="btn btn-success" style="background-color: #34345E; border: 0px;" href="/back">&#8592; Back</a>
         </li>
         
     </ul>
     
     <form class="form-inline my-2 my-lg-0">
-        <a class="btn btn-primary" href="/logout">Logout</a>
+        <a class="btn btn-primary" style="background-color: #34495E; border: 0px;" href="/logout">Logout</a>
     </form>
 </nav>
 
@@ -104,7 +112,7 @@
                         <img  src="icons/the-file.png" class="center-hz" style= "width: 70px; height: 90px; padding-top: 20px;">
                         <p class="center-text"><%= item.name %></p>
                         <center style="display: block; width: 200px; height: 50px; ">
-                            <button style="margin-left: auto; margin-right: auto;" class="btn btn-primary my-sm-button" onclick="downloadItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">&#8595;</button>
+                            <button style="margin-left: auto; margin-right: auto;" class="btn btn-dark my-sm-button" onclick="downloadItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">&#8595;</button>
                             <button style="margin-left: auto; margin-right: auto;" class="btn btn-danger my-sm-button" onclick="deleteItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">X</button>
                         </center>
                         <!-- <button onclick="downloadItem('<%= item.name %>', '<%= item.path %>', '<%= item.type %>')">Download</button>
@@ -203,3 +211,5 @@
         }
     }
 </script>
+
+</body>

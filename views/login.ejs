@@ -3,10 +3,19 @@
 Registration <%= rsuccess %>! -->
 
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
+<link rel="stylesheet" href="stylesheets/style.css"/>
 
-<h1 style="text-align: center; padding-top: 50px;">Welcome to the File Manager</h1>
+<style>
+    body {
+        background-color: #34495e;
+    }
+</style>
 
-<div class="card" style="width: 28rem; margin-right: auto; margin-left: auto; margin-top: 50px;">
+<body>
+
+<h1 style="text-align: center; padding-top: 50px; color: #FFFFFF;">Welcome to the File Manager</h1>
+
+<div class="card" style="width: 28rem;  border: 0px; margin-right: auto; margin-left: auto; margin-top: 50px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
     <div class="card-body">
       <h5 class="card-title">Login</h5>
       <form method="post" action="/trylogin">
@@ -16,10 +25,10 @@ Registration <%= rsuccess %>! -->
         <br />
         <div class="form-row">
             <div class="form-group col-md-6">
-              <input type="submit" class="form-control btn btn-primary" id="submitform1" value="Login">
+              <input type="submit" class="form-control btn btn-primary" style="background-color: #345E5E; border: 0px;" id="submitform1" value="Login">
             </div>
             <div class="form-group col-md-6">
-              <a class="btn btn-dark form-control"  href="register">Register</a>
+              <a class="btn btn-dark form-control"  style="background-color: #34345E; border: 0px;" href="register">Register</a>
             </div>
           </div>
     </form>
@@ -39,3 +48,4 @@ Registration <%= rsuccess %>! -->
 
 <script language="javascript" src="js/bootstrap.min.js"></script>
 
+</body>
