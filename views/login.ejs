@@ -14,14 +14,15 @@ Registration <%= rsuccess %>! -->
 <body>
 
 <h1 style="text-align: center; padding-top: 50px; color: #FFFFFF;">Welcome to the File Manager</h1>
+<p style="text-align: center; padding-top: 10px; color: #FFFFFF;">NOTE: Do not enter your secret passwords. Passwords are stored encrypted.</p>
 
-<div class="card" style="width: 28rem;  border: 0px; margin-right: auto; margin-left: auto; margin-top: 50px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+<div class="card" style="width: 28rem;  border: 0px; margin-right: auto; margin-left: auto; margin-top: 20px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
     <div class="card-body">
       <h5 class="card-title">Login</h5>
       <form method="post" action="/trylogin">
-        Email <input type="text" class="form-control" id="inputEmail3" name="email" />
+        Email <input type="text" class="form-control" id="inputEmail3" name="email" value="test_account" />
         <br />
-        Password <input type="password" class="form-control" id="inputPass" name="password" />
+        Password <input type="password" class="form-control" id="inputPass" name="password" value="test_account" />
         <br />
         <div class="form-row">
             <div class="form-group col-md-6">

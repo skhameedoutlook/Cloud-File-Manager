@@ -20,7 +20,7 @@ var util = require('util');
 
 var app = express();
 
-var port = 3000
+var port = 8080
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
